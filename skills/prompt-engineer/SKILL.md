@@ -50,6 +50,8 @@ Wait for explicit acceptance of the **current complete proposal** (for example, 
 
 Once approved, use the approved prompt as the operative task and **execute it by default**. Do not require the user to paste it again or issue a second execution command. If the user specified “prompt only”, “do not execute”, “just rewrite”, or equivalent at any point, instead return the complete version labeled **Approved prompt** without executing.
 
+**Expert-Mode feature handoff:** When the approved request is to plan a new feature or follow the full Expert-Mode development workflow, hand the approved objective, constraints, acceptance conditions, and relevant decisions to `/pseudo-plan` if available. Start its persistent planning workflow; do not jump to coding. If the skill cannot be invoked directly, follow its installed instructions when accessible, or explain the unavailable handoff rather than claiming it ran. Prompt approval authorizes starting planning, **not** implementing a pseudo-plan. Only a later explicit instruction to implement that plan opens the implementation gate. For standalone tasks, execute the approved task normally; do not force all requests through pseudo-plan.
+
 Execution must honor all approved boundaries: a planning-only prompt produces a plan, a review-only prompt performs a review, and implementation is allowed only when the approved prompt requests it. Follow normal tool permissions, safety constraints, and required confirmations for sensitive actions; approval does not override those safeguards. If execution is unavailable, say so and provide the approved prompt.
 
 ## Response format
