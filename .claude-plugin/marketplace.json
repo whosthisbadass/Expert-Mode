@@ -1,0 +1,13 @@
+{
+  "name": "expert-mode",
+  "owner": {
+    "name": "Expert-Mode contributors"
+  },
+  "plugins": [
+    {
+      "name": "expert-mode",
+      "source": "./",
+      "description": "Eleven pragmatic engineering skills with a coordinated prompt-to-implementation workflow."
+    }
+  ]
+}
