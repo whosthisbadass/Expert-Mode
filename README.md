@@ -33,9 +33,17 @@ Inspired by [Ponytail](https://github.com/DietrichGebert/ponytail), Expert-Mode 
 
 Each skill is self-contained and can be used independently.
 
+### Integrated Expert-Mode workflow
+
+**Prompt Engineer → Plan → Assign expertise → Refine → Authorize → Implement → Validate → Document**
+
+Start with `/prompt-engineer` to improve the request through conversation. Approving a feature-planning prompt starts `/pseudo-plan` (when installed), which saves a behavioral specification and selects only relevant specialist skills by responsibility. Refine the persistent plan through conversation. **Design approval is not implementation authorization**; explicitly request implementation to begin coding. Validation and documentation are incorporated proportionally, not mandatory specialist ceremonies for trivial changes.
+
+All skills also work independently: invoking `/pseudo-plan` skips prompt engineering, and invoking a specialist directly does not require the full workflow. Cross-skill handoffs depend on the agent's supported skill mechanisms; listing an assignment does not mean another skill or subagent was actually invoked.
+
 ### Planning with Pseudo-Plan
 
-`/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures observable behavior in plain-English pseudocode and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
+`/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures observable behavior in plain-English pseudocode, assigns relevant specialist responsibilities when useful, and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
 
 ### The UI workflow
 
@@ -115,7 +123,7 @@ The skills with optional intensity are DevOps Architect, Application Security En
 
 ### Prompt Engineer is different
 
-`/prompt-engineer` proposes a clearer prompt and iterates through normal conversation until the user explicitly approves the complete proposal. **Approval executes the approved prompt by default**, respecting its scope (planning stays planning; review stays review). To receive only the final prompt, specify **“prompt only”** or **“do not execute”**. No separate execution command is needed after approval.
+`/prompt-engineer` proposes a clearer prompt and iterates through normal conversation until the user explicitly approves the complete proposal. **Approval executes the approved prompt by default**, respecting its scope. For new-feature planning, it hands off to `/pseudo-plan` when available; prompt approval starts planning, not implementation. To receive only the final prompt, specify **“prompt only”** or **“do not execute”**. No separate execution command is needed after approval.
 
 ## Repository layout
 
