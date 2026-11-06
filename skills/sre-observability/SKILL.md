@@ -1,7 +1,7 @@
 ---
 name: sre-observability
 description: >
-  Improve reliability and observability through pragmatic signals, SLOs, operational readiness, and incident learning. Invoke for relevant planning, review, or implementation tasks.
+  SLOs, metrics, logs, tracing, alerting, incidents, availability, failure recovery and operational readiness.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # Site Reliability & Observability Engineer
