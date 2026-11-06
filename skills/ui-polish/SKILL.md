@@ -1,7 +1,7 @@
 ---
 name: ui-polish
 description: >
-  Existing UI typography, spacing, visual hierarchy, responsive behavior, consistency and interaction states.
+  Refine existing functional UI through typography, spacing, visual hierarchy, responsive design, consistency and interaction polish; use when asked to improve appearance or feel.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # UI Polish
