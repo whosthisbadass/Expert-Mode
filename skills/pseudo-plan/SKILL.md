@@ -1,15 +1,18 @@
 ---
 name: pseudo-plan
 description: >
-  Plan new features as persistent, conversationally refined plain-English pseudocode.
-  Always save a plan artifact, even for small features. Implement only when explicitly requested.
+  Capture the user's vision for a feature as a persistent, conversationally refined plain-English plan.
+  Always save a plan artifact, even for small features. Implement only when explicitly requested,
+  then adapt technical decisions to the codebase and record what was actually built.
   Use when the user starts, continues, revises, or asks to execute a pseudo-plan.
 argument-hint: "<feature or implementation goal>"
 ---
 
 # Pseudo-Plan — Think in actions before code
 
-Turn a feature request into the **smallest complete sequence of observable actions** that achieves the intended behavior. Plain English is the design language. Keep one persistent Markdown artifact per feature, refine it through ordinary conversation, and translate it into code only after an explicit implementation request.
+Capture what the user wants through ordinary conversation: goals, expected behavior, preferences, constraints, and approach ideas. Plain English is the design language. Keep one persistent Markdown artifact per feature and refine it with the user. The plan records intent, not a rigid contract: after an explicit implementation request, the agent owns the technical approach and records what was actually built.
+
+The human describes what they want. The agent figures out how to build it. Reality refines the approach. The final record explains what was actually built. (Background: `METHODOLOGY.md` in the Expert-Mode repository; these instructions are self-contained.)
 
 ## Operating principles
 
@@ -17,6 +20,7 @@ Turn a feature request into the **smallest complete sequence of observable actio
 - Remove unnecessary steps, duplication, speculative flexibility, and unjustified services or abstractions without sacrificing correctness, security, reliability, error handling, or data safety.
 - Plan **new work**; do not turn this into an unrelated code review or refactor.
 - Preserve user intent and settled decisions. Distinguish observed repository facts from assumptions and proposals.
+- **Binding requirements:** explicit non-negotiable requirements, prohibitions, and safety constraints bind implementation regardless of formatting. A `Must:` prefix may be used for clarity but is optional. Preferences, pseudocode, and approach ideas express intent and starting hypotheses.
 - Use adaptive depth proportional to complexity and risk; there are **no Lite / Full / Ultra modes**.
 - Specialist skills are optional and independent. Assign them by **responsibility/workstream**, not by directory or file ownership. Use only those that materially improve the work; do not create unnecessary reviews or subagents.
 - When available, accept an approved `prompt-engineer` request as the starting goal without a second prompt-approval round. This starts **planning only**, never implementation.
@@ -38,6 +42,7 @@ Default path: `.expert-mode/plans/<feature-kebab-case>.md` from the repository r
 - **No goal supplied:** inspect the plan directory for active plans. If one, offer to continue it; if several, ask which; if none, ask what to plan.
 - **Continuation:** read the existing artifact and re-check repository facts that may have changed.
 - **Plan not in this template** (missing `Design:` or other sections, or outside the plan directory): continue editing within existing sections, but ask before adding fields or sections, moving, or renaming the file.
+- **Older execution sections** (`## Technical approach`, `## Implementation progress`): keep using them in that plan. Do not merge or migrate them into `## Implementation` without the user's permission.
 - If the environment cannot write a file, provide the complete Markdown artifact and state that persistence was not possible; never claim it was saved.
 
 ## Planning mode (default)
@@ -59,7 +64,7 @@ Describe **what the system does**, in natural order, rather than how classes and
 - Number actions only when their order matters.
 - Include decisions, permissions, state changes, errors, retries, and recovery where relevant.
 - Use technical names only when referencing actual existing project elements.
-- Avoid invented services, files, interfaces, and premature architecture.
+- Avoid inventing services, files, interfaces, and premature architecture yourself. Architectures or workflows the user proposes go in `## Approach ideas`, labeled as hypotheses for implementation to confirm or replace.
 - Keep small features small; large features may have multiple behavior sections.
 - Avoid vague steps such as “handle failures” and source-level prescriptions such as “implement `BackupManager.run()`.”
 
@@ -77,7 +82,7 @@ During planning, assignments are **advisory**: they identify ownership and consi
 
 Specialist findings during planning:
 
-- Keep them at the behavior level. Layout, packaging, and configuration detail belongs in `## Technical approach` during execution.
+- Keep them at the behavior level. Layout, packaging, and configuration detail belongs in `## Implementation` during execution.
 - Apply a finding directly only when it adds a safeguard without changing anything the user sees or decided. List these in the chat summary.
 - Present every other finding as a proposal: cite the affected plan section and wait for the user's choice before rewriting that behavior. This includes new behavior and changes to behavior the user proposed or discussed.
 
@@ -101,13 +106,25 @@ In one or two lines, state the plan's current status, material open decisions, a
 
 ## Execution mode (explicit request only)
 
-1. Re-read the artifact, confirm the user explicitly authorized implementation, and set `Status: Execution authorized`. Resolve any open decision that materially affects behavior before editing code.
-2. Add `## Technical approach`: map behavioral steps to real files, interfaces, data structures, migrations, and tests. Prefer existing patterns and the smallest sufficient change. The technical approach implements the pseudocode; it does not replace it.
-3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful.
-4. Validate the implemented behavior against the approved acceptance conditions and run relevant available checks. Use applicable specialist reviews (such as security, reliability, or UI audit) proportionally; report checks that could not be run. Treat validation as ongoing during implementation with a final verification gate.
-5. Update relevant technical and user/operator documentation using the appropriate expertise where useful. Document actual implemented behavior, not aspirational plans; for trivial changes, no separate documentation is required.
-6. If discovery requires changing approved behavior, stop, update the plan, mark the design draft as appropriate, and ask for a decision. Ordinary technical choices preserving approved behavior need no new approval.
-7. Set `Status: Implemented` **only if implementation is complete**. Otherwise retain an accurate status and record incomplete work. Report changed files, checks actually run, outstanding issues, and deviations.
+After authorization the agent owns the technical execution. Preserve the user's underlying goal, not the originally proposed solution: use an existing capability, library, or platform feature instead of a planned component when it achieves the same outcome more reliably, and redesign when the planned architecture does not fit the codebase. Ordinary technical decisions, architecture changes, dependency substitutions, and reasonable adaptations need no further approval; record the meaningful ones.
+
+Ask the user for a decision **only** when:
+- a central user expectation (an outcome the user stated, not a mechanism they suggested) must be abandoned or materially changed;
+- an explicit non-negotiable requirement, prohibition, or safety constraint cannot be satisfied;
+- the alternative introduces significant security, data-loss, privacy, or irreversible consequences; or
+- several consequential product tradeoffs cannot reasonably be resolved from the user's expressed intent.
+
+Steps:
+
+1. Re-read the artifact, confirm the user explicitly authorized implementation, and set `Status: Execution authorized`. Resolve beforehand only open decisions that meet the conditions above; settle the rest from the user's intent and record them.
+2. Inspect the relevant code and dependencies until the approach is grounded, then add `## Implementation` (see Artifact format) with the selected approach.
+3. Implement, test, investigate failures, and refine the approach. Keep one integrated implementation, not competing designs. Use assigned or relevant specialist skills when their review adds value, proportional to risk; no review is mandatory for every change.
+4. Validate the result against the user's expected outcomes and binding requirements, and run relevant available checks. For a fixed defect, prefer meaningful regression coverage, especially for consequential or recurring failures; existing coverage or another verification method is acceptable when sufficient. Propose a project-guidance note for a recurring class of defect rather than writing one unasked.
+5. Update relevant technical and user/operator documentation where useful. Document actual implemented behavior, not aspirational plans; for trivial changes, no separate documentation is required.
+6. If a condition above is met, do not proceed with that part: set `Status: Blocked`, record the blocker and options under `## Implementation`, ask for a decision, and continue only work the blocker does not affect.
+7. Before setting `Status: Implemented`, reconcile `## Implementation` with the code and Git history: every listed change exists and every verification result was actually observed. Set `Implemented` **only if implementation is complete**; otherwise keep an accurate status and record remaining work. Report changed files, checks actually run, outstanding issues, and deviations.
+
+After authorization, change the sections above `## Implementation` only through user decisions, so the original intent stays readable beside what was built.
 
 Implementation authorization never overrides tool permissions, repository rules, or platform safeguards. If an agent's Plan Mode prevents edits, explain the limitation and how to enable implementation.
 
@@ -138,6 +155,9 @@ Design: Draft
 ## Existing capabilities to reuse
 <Observed functionality; mark unverified assumptions>
 
+## Approach ideas
+<User-proposed architectures or workflows; hypotheses, not requirements>
+
 ## Specialist assignments
 | Workstream | Skill | Responsibility | Stage |
 | --- | --- | --- | --- |
@@ -150,10 +170,25 @@ Design: Draft
 <Meaningful decisions and revisions, not a transcript>
 ```
 
-Valid status values: `Planning`, `Execution authorized`, `Implemented`.
+Valid status values: `Planning`, `Execution authorized`, `Blocked`, `Implemented`.
 Valid design values: `Draft`, `Approved`.
 
-During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work.
+During execution, add and maintain:
+
+```markdown
+## Implementation
+Approach: <selected architecture and strategy; why, if it differs from Approach ideas>
+Changes: <meaningful components, files, integrations, commits; not a diff>
+Deviations:
+| Plan expected | Built instead | Why | Effect on user outcome |
+| --- | --- | --- | --- |
+Verification:
+| Check | Result (passed / failed / blocked / not run) | Notes |
+| --- | --- | --- | --- |
+Remaining: <incomplete work, known limitations, blockers and options, outstanding validation>
+```
+
+Update it when the approach changes, at a blocker, at the end of a session, and at completion, not after every edit. Rewrite `Approach` when it changes; Git keeps the history. Omit empty parts. It records what happened; it is not a second specification to obey over evidence found during execution.
 
 A blank `Open decisions` section does not imply approval. Do not introduce version counters or competing plans unless requested. A specialist deliverable of a different kind (for example an interface contract) may sit beside the plan as `<feature>-<kind>.md`, linked from the plan; the plan stays authoritative for behavior.
 

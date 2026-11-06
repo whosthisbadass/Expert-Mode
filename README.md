@@ -35,9 +35,9 @@ Each skill is self-contained and can be used independently.
 
 ### Integrated Expert-Mode workflow
 
-**Prompt Engineer → Plan → Assign expertise → Refine → Authorize → Implement → Validate → Document**
+**Prompt Engineer → Brainstorm and refine → Authorize → Build and adapt → Verify → Record what was built**
 
-Start with `/prompt-engineer` to improve the request through conversation. Approving a feature-planning prompt starts `/pseudo-plan` (when installed), which saves a behavioral specification and selects only relevant specialist skills by responsibility. Refine the persistent plan through conversation. **Design approval is not implementation authorization**; explicitly request implementation to begin coding. Validation and documentation are incorporated proportionally, not mandatory specialist ceremonies for trivial changes.
+Start with `/prompt-engineer` to improve the request through conversation. Approving a feature-planning prompt starts `/pseudo-plan` (when installed), which saves a persistent plan of what you want and selects only relevant specialist skills by responsibility. Refine the persistent plan through conversation. **Design approval is not implementation authorization**; explicitly request implementation to begin coding. Validation and documentation are incorporated proportionally, not mandatory specialist ceremonies for trivial changes.
 
 All skills also work independently: invoking `/pseudo-plan` skips prompt engineering, and invoking a specialist directly does not require the full workflow. Cross-skill handoffs depend on the agent's supported skill mechanisms; listing an assignment does not mean another skill or subagent was actually invoked.
 
@@ -47,7 +47,9 @@ All skills also work independently: invoking `/pseudo-plan` skips prompt enginee
 
 ### Planning with Pseudo-Plan
 
-`/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures observable behavior in plain-English pseudocode, assigns relevant specialist responsibilities when useful, and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
+`/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures your goals, expected behavior, preferences, constraints, and approach ideas in plain English, assigns relevant specialist responsibilities when useful, and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
+
+Once implementation is authorized, the agent owns the technical approach. It may replace a proposed component with an existing capability or redesign an architecture that does not fit the codebase, without asking. It asks only when a stated expectation must be dropped, an explicit constraint cannot be met, or an alternative adds significant security, data-loss, privacy, or irreversible risk. An `## Implementation` section in the same plan records the approach, deviations, verification, and remaining work, so the original intent and the actual result stay side by side. See [METHODOLOGY.md](METHODOLOGY.md) for the full rationale.
 
 ### The UI workflow
 
@@ -149,6 +151,7 @@ The skills with optional intensity are DevOps Architect, Application Security En
 ## Repository layout
 
 ```text
+METHODOLOGY.md
 .claude-plugin/
 ├── plugin.json
 └── marketplace.json
@@ -182,7 +185,7 @@ Open an issue to discuss an idea or a pull request with the proposed change.
 
 ## Inspiration
 
-Expert-Mode draws inspiration from [Ponytail by Dietrich Gebert](https://github.com/DietrichGebert/ponytail), particularly its focus on simplicity and avoiding overengineering. Expert-Mode is an independent collection of domain-specific skills, not an official Ponytail project.
+Expert-Mode draws inspiration from [Ponytail by Dietrich Gebert](https://github.com/DietrichGebert/ponytail), particularly its focus on simplicity and avoiding overengineering. Its methodology also borrows from [caveman](https://github.com/JuliusBrussee/caveman) (efficient, precise agent communication) and [cavekit](https://github.com/JuliusBrussee/cavekit) (durable intent and learning from failures), both by Julius Brussee. Expert-Mode is an independent collection of domain-specific skills, not an official project of any of these.
 
 ---
 
