@@ -1,7 +1,7 @@
 ---
 name: ui-audit
 description: >
-  Audit implemented UI code and behavior for usability, accessibility, consistency, and performance. Invoke for relevant planning, review, or implementation tasks.
+  Existing UI accessibility, usability, responsive defects, interaction bugs, consistency and frontend performance.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # UI Audit
