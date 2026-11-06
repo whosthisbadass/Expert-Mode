@@ -19,7 +19,7 @@ Inspired by [Ponytail](https://github.com/DietrichGebert/ponytail), Expert-Mode 
 
 | Skill | Focus | Intensity |
 | --- | --- | --- |
-| [Prompt Engineer](skills/prompt-engineer/SKILL.md) | Rewrite prompts through conversational refinement and explicit approval; never execute the rewritten prompt | Adaptive |
+| [Prompt Engineer](skills/prompt-engineer/SKILL.md) | Collaboratively refine prompts, then execute after approval unless prompt-only output is requested | Adaptive |
 | [DevOps Architect](skills/devops-architect/SKILL.md) | Infrastructure, Kubernetes, CI/CD, automation, deployment, and rollback | Optional |
 | [Application Security Engineer](skills/appsec-engineer/SKILL.md) | Authentication, authorization, APIs, trust boundaries, and secure application design | Optional |
 | [Cybersecurity Engineer](skills/cybersecurity-engineer/SKILL.md) | Network and infrastructure security, hardening, identity, and defensive controls | Optional |
@@ -109,7 +109,7 @@ The skills with optional intensity are DevOps Architect, Application Security En
 
 ### Prompt Engineer is different
 
-`/prompt-engineer` **only rewrites prompts**. It presents a proposed prompt, accepts changes in normal conversation, and finalizes the prompt only after explicit user approval. Approval does not execute the resulting instructions.
+`/prompt-engineer` proposes a clearer prompt and iterates through normal conversation until the user explicitly approves the complete proposal. **Approval executes the approved prompt by default**, respecting its scope (planning stays planning; review stays review). To receive only the final prompt, specify **“prompt only”** or **“do not execute”**. No separate execution command is needed after approval.
 
 ## Repository layout
 
