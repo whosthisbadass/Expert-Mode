@@ -1,7 +1,7 @@
 ---
 name: ui-polish
 description: >
-  Refine an existing functional interface into a cohesive, premium-feeling experience without sacrificing usability. Invoke for relevant planning, review, or implementation tasks.
+  Existing UI typography, spacing, visual hierarchy, responsive behavior, consistency and interaction states.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # UI Polish
