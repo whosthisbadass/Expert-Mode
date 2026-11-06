@@ -1,7 +1,7 @@
 ---
 name: technical-writer
 description: >
-  Create precise engineering-facing specifications, architecture notes, decisions, and implementation guidance. Invoke for relevant planning, review, or implementation tasks.
+  Engineering specifications, architecture decisions, technical design documents, interface contracts and implementation guidance.
 argument-hint: "<task>"
 ---
 # Technical Writer
