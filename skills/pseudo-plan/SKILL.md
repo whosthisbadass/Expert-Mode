@@ -9,8 +9,6 @@ argument-hint: "<feature or implementation goal>"
 
 # Pseudo-Plan — Think in actions before code
 
-Goal: $ARGUMENTS
-
 Turn a feature request into the **smallest complete sequence of observable actions** that achieves the intended behavior. Plain English is the design language. Keep one persistent Markdown artifact per feature, refine it through ordinary conversation, and translate it into code only after an explicit implementation request.
 
 ## Operating principles
@@ -39,6 +37,7 @@ Default path: `.expert-mode/plans/<feature-kebab-case>.md` from the repository r
 - **Goal supplied:** look for a plan covering the same feature; continue it rather than create a duplicate.
 - **No goal supplied:** inspect the plan directory for active plans. If one, offer to continue it; if several, ask which; if none, ask what to plan.
 - **Continuation:** read the existing artifact and re-check repository facts that may have changed.
+- **Plan not in this template** (missing `Design:` or other sections, or outside the plan directory): continue it, but ask before adding fields or sections or moving the file.
 - If the environment cannot write a file, provide the complete Markdown artifact and state that persistence was not possible; never claim it was saved.
 
 ## Planning mode (default)
@@ -70,11 +69,17 @@ Before presenting, silently check whether existing behavior already meets the ne
 
 ### 4. Assign specialist expertise
 
-After the first behavioral draft, identify meaningful workstreams and map only the useful specialist skills to each. Record assignments in the **same plan artifact** under `## Specialist assignments` with columns `Workstream | Skill | Responsibility | Stage`. Stage may be `Planning`, `Implementation`, `Validation`, or `Documentation`; a skill may cover multiple stages. Omit the section if no specialist adds value.
+After the first behavioral draft, identify meaningful workstreams and map only the useful specialist skills to each. Record assignments in the **same plan artifact** under `## Specialist assignments` with columns `Workstream | Skill | Responsibility | Stage`. Stage may be `Planning`, `Implementation`, `Validation`, or `Documentation`; a skill may cover multiple stages. Update a row's Stage when a specialist actually works at a different stage than assigned. Omit the section if no specialist adds value.
 
 Available Expert-Mode specialists include `devops-architect`, `appsec-engineer`, `cybersecurity-engineer`, `sre-observability`, `ui-foundation`, `ui-polish`, `ui-audit`, `technical-writer`, and `documentation-writer`. Select by task, not by checklist. Security and reliability expertise should inform early design where relevant, not only post-implementation review.
 
 During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `pseudo-plan` responsible for scope and integration. Avoid a specialist review loop for trivial changes.
+
+Specialist findings during planning:
+
+- Keep them at the behavior level. Layout, packaging, and configuration detail belongs in `## Technical approach` during execution.
+- Apply a finding directly only when it adds a safeguard without changing anything the user sees or decided. List these in the chat summary.
+- Present every other finding as a proposal: cite the affected plan section and wait for the user's choice before rewriting that behavior. This includes new behavior and changes to behavior the user proposed or discussed.
 
 ### 5. Refine conversationally
 
@@ -92,7 +97,7 @@ If the user changes approved behavior, update the plan and mark `Design: Draft` 
 
 ### 7. End planning replies
 
-State the plan's current status, material open decisions, and artifact path. Invite refinement or an explicit implementation request without pushing the user to proceed.
+In one or two lines, state the plan's current status, material open decisions, and artifact path. Invite refinement or an explicit implementation request without pushing the user to proceed. Do not repeat identical closing text when nothing changed.
 
 ## Execution mode (explicit request only)
 
@@ -150,7 +155,7 @@ Valid design values: `Draft`, `Approved`.
 
 During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work.
 
-A blank `Open decisions` section does not imply approval. Do not introduce version counters or parallel artifacts unless requested.
+A blank `Open decisions` section does not imply approval. Do not introduce version counters or competing plans unless requested. A specialist deliverable of a different kind (for example an interface contract) may sit beside the plan as `<feature>-<kind>.md`, linked from the plan; the plan stays authoritative for behavior.
 
 ## Style
 

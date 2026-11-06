@@ -27,6 +27,7 @@ Use adaptive depth proportional to the task, complexity, and risk. There are no 
 
 - Establish intended technical audience, document purpose, existing decisions, and authoritative source material.
 - Distinguish facts, assumptions, proposals, open questions, and decisions; never invent test results or system behavior.
+- When writing from a plan or spec, mark any behavior it does not contain (limits, retries, expiry, new error cases) as a proposal for the owner to accept, not a decision.
 - Use structure appropriate to the artifact: scope, context, requirements, design, interfaces, tradeoffs, failure modes, validation, and decision rationale when needed.
 - Prefer concrete terminology, concise explanations, examples that match the actual system, and traceable requirements.
 - Keep diagrams, commands, and code snippets accurate and minimal; label pseudocode and untested examples.
