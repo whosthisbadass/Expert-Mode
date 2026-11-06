@@ -20,7 +20,9 @@ Turn a feature request into the **smallest complete sequence of observable actio
 - Plan **new work**; do not turn this into an unrelated code review or refactor.
 - Preserve user intent and settled decisions. Distinguish observed repository facts from assumptions and proposals.
 - Use adaptive depth proportional to complexity and risk; there are **no Lite / Full / Ultra modes**.
-- If another specialist skill is available and genuinely useful, its domain guidance may inform the plan, but do not claim to have invoked it unless it was actually invoked. No other skill is required.
+- Specialist skills are optional and independent. Assign them by **responsibility/workstream**, not by directory or file ownership. Use only those that materially improve the work; do not create unnecessary reviews or subagents.
+- When available, accept an approved `/prompt-engineer` request as the starting goal without a second prompt-approval round. This starts **planning only**, never implementation.
+- Do not claim a specialist was invoked or a separate agent ran unless it actually happened. When skill invocation is unavailable, consult accessible skill instructions or use general expertise, and report limitations without pretending delegation occurred.
 
 ## Find or create the artifact
 
@@ -60,13 +62,21 @@ Describe **what the system does**, in natural order, rather than how classes and
 
 Before presenting, silently check whether existing behavior already meets the need, steps can be removed or combined, or new dependencies and state can be avoided. Never simplify away required behavior or safeguards. Present the resulting plan, not a transcript of the internal debate.
 
-### 4. Refine conversationally
+### 4. Assign specialist expertise
+
+After the first behavioral draft, identify meaningful workstreams and map only the useful specialist skills to each. Record assignments in the **same plan artifact** under `## Specialist assignments` with columns `Workstream | Skill | Responsibility | Stage`. Stage may be `Planning`, `Implementation`, `Validation`, or `Documentation`; a skill may cover multiple stages. Omit the section if no specialist adds value.
+
+Available Expert-Mode specialists include `/devops-architect`, `/appsec-engineer`, `/cybersecurity-engineer`, `/sre-observability`, `/ui-foundation`, `/ui-polish`, `/ui-audit`, `/technical-writer`, and `/documentation-writer`. Select by task, not by checklist. Security and reliability expertise should inform early design where relevant, not only post-implementation review.
+
+During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `/pseudo-plan` responsible for scope and integration. Do not assume slash-command text automatically invokes another skill. Only invoke through supported agent mechanisms, or inspect installed instructions where available. Avoid a specialist review loop for trivial changes.
+
+### 5. Refine conversationally
 
 Treat follow-up messages as discussion of the active plan unless the user clearly switches tasks. Update the **same artifact** after meaningful changes, re-check affected steps, and preserve settled decisions. In chat, summarize what changed and link or name the artifact; do not repeat the full plan unless useful or requested.
 
 There is no refine command, fixed number of passes, or required separate reviewer.
 
-### 5. Approval is not execution
+### 6. Approval is not execution
 
 A user may approve the **design** with wording such as “looks good” or “approved.” Record `Design: Approved` when the intent is clear, but remain in `Status: Planning`.
 
@@ -74,7 +84,7 @@ Only an explicit instruction such as **“implement this,” “execute the plan
 
 If the user changes approved behavior, update the plan and mark `Design: Draft` until the changed design is accepted. Do not silently reinterpret approval.
 
-### 6. End planning replies
+### 7. End planning replies
 
 State the plan's current status, material open decisions, and artifact path. Invite refinement or an explicit implementation request without pushing the user to proceed.
 
@@ -82,9 +92,11 @@ State the plan's current status, material open decisions, and artifact path. Inv
 
 1. Re-read the artifact, confirm the user explicitly authorized implementation, and set `Status: Execution authorized`. Resolve any open decision that materially affects behavior before editing code.
 2. Add `## Technical approach`: map behavioral steps to real files, interfaces, data structures, migrations, and tests. Prefer existing patterns and the smallest sufficient change. The technical approach implements the pseudocode; it does not replace it.
-3. Implement only the authorized scope and run relevant available checks.
-4. If discovery requires changing approved behavior, stop, update the plan, mark the design draft as appropriate, and ask for a decision. Ordinary technical choices preserving approved behavior need no new approval.
-5. Set `Status: Implemented` **only if implementation is complete**. Otherwise retain an accurate status and record incomplete work. Report changed files, checks actually run, outstanding issues, and deviations.
+3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful. Do not confuse an assignment with a completed invocation.
+4. Validate the implemented behavior against the approved acceptance conditions and run relevant available checks. Use applicable specialist reviews (such as security, reliability, or UI audit) proportionally; report checks that could not be run. Treat validation as ongoing during implementation with a final verification gate.
+5. Update relevant technical and user/operator documentation using the appropriate expertise where useful. Document actual implemented behavior, not aspirational plans; for trivial changes, no separate documentation is required.
+6. If discovery requires changing approved behavior, stop, update the plan, mark the design draft as appropriate, and ask for a decision. Ordinary technical choices preserving approved behavior need no new approval.
+7. Set `Status: Implemented` **only if implementation is complete**. Otherwise retain an accurate status and record incomplete work. Report changed files, checks actually run, outstanding issues, and deviations.
 
 Implementation authorization never overrides tool permissions, repository rules, or platform safeguards. If an agent's Plan Mode prevents edits, explain the limitation and how to enable implementation.
 
@@ -115,6 +127,11 @@ Design: Draft
 ## Existing capabilities to reuse
 <Observed functionality; mark unverified assumptions>
 
+## Specialist assignments
+| Workstream | Skill | Responsibility | Stage |
+| --- | --- | --- | --- |
+| <Relevant workstream> | </relevant-skill> | <Bounded responsibility> | <Planning/Implementation/Validation/Documentation> |
+
 ## Open decisions
 <Only unresolved choices that materially change behavior>
 
@@ -124,6 +141,8 @@ Design: Draft
 
 Valid status values: `Planning`, `Execution authorized`, `Implemented`.
 Valid design values: `Draft`, `Approved`.
+
+During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work. Assigned expertise is not evidence of completed work.
 
 A blank `Open decisions` section does not imply approval. Do not introduce version counters or parallel artifacts unless requested.
 
