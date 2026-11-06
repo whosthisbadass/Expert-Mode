@@ -21,8 +21,14 @@ Turn a feature request into the **smallest complete sequence of observable actio
 - Preserve user intent and settled decisions. Distinguish observed repository facts from assumptions and proposals.
 - Use adaptive depth proportional to complexity and risk; there are **no Lite / Full / Ultra modes**.
 - Specialist skills are optional and independent. Assign them by **responsibility/workstream**, not by directory or file ownership. Use only those that materially improve the work; do not create unnecessary reviews or subagents.
-- When available, accept an approved `/prompt-engineer` request as the starting goal without a second prompt-approval round. This starts **planning only**, never implementation.
+- When available, accept an approved `prompt-engineer` request as the starting goal without a second prompt-approval round. This starts **planning only**, never implementation.
 - Do not claim a specialist was invoked or a separate agent ran unless it actually happened. When skill invocation is unavailable, consult accessible skill instructions or use general expertise, and report limitations without pretending delegation occurred.
+
+## Skill naming and delegation
+
+Standalone skills may be invoked as `/pseudo-plan` and `/appsec-engineer`; Claude Code plugin installations namespace them as `/expert-mode:pseudo-plan` and `/expert-mode:appsec-engineer`. References to skill names in this document are logical identifiers, not guaranteed invocations. Use the names supported by the current installation. Record specialist assignments by unprefixed logical skill name so plans remain portable.
+
+An assignment documents responsibility, **not** an actual invocation. Invoke a specialist only through an available skill mechanism, or consult its instructions when accessible; report unavailable delegation. The active agent owns integration and verification. Never require separate subagents simply because multiple skills are assigned.
 
 ## Find or create the artifact
 
@@ -68,7 +74,7 @@ After the first behavioral draft, identify meaningful workstreams and map only t
 
 Available Expert-Mode specialists include `/devops-architect`, `/appsec-engineer`, `/cybersecurity-engineer`, `/sre-observability`, `/ui-foundation`, `/ui-polish`, `/ui-audit`, `/technical-writer`, and `/documentation-writer`. Select by task, not by checklist. Security and reliability expertise should inform early design where relevant, not only post-implementation review.
 
-During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `/pseudo-plan` responsible for scope and integration. Do not assume slash-command text automatically invokes another skill. Only invoke through supported agent mechanisms, or inspect installed instructions where available. Avoid a specialist review loop for trivial changes.
+During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `/pseudo-plan` responsible for scope and integration. Avoid a specialist review loop for trivial changes.
 
 ### 5. Refine conversationally
 
@@ -92,7 +98,7 @@ State the plan's current status, material open decisions, and artifact path. Inv
 
 1. Re-read the artifact, confirm the user explicitly authorized implementation, and set `Status: Execution authorized`. Resolve any open decision that materially affects behavior before editing code.
 2. Add `## Technical approach`: map behavioral steps to real files, interfaces, data structures, migrations, and tests. Prefer existing patterns and the smallest sufficient change. The technical approach implements the pseudocode; it does not replace it.
-3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful. Do not confuse an assignment with a completed invocation.
+3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful. 
 4. Validate the implemented behavior against the approved acceptance conditions and run relevant available checks. Use applicable specialist reviews (such as security, reliability, or UI audit) proportionally; report checks that could not be run. Treat validation as ongoing during implementation with a final verification gate.
 5. Update relevant technical and user/operator documentation using the appropriate expertise where useful. Document actual implemented behavior, not aspirational plans; for trivial changes, no separate documentation is required.
 6. If discovery requires changing approved behavior, stop, update the plan, mark the design draft as appropriate, and ask for a decision. Ordinary technical choices preserving approved behavior need no new approval.
@@ -142,7 +148,7 @@ Design: Draft
 Valid status values: `Planning`, `Execution authorized`, `Implemented`.
 Valid design values: `Draft`, `Approved`.
 
-During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work. Assigned expertise is not evidence of completed work.
+During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work. 
 
 A blank `Open decisions` section does not imply approval. Do not introduce version counters or parallel artifacts unless requested.
 
