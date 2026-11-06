@@ -37,7 +37,7 @@ Default path: `.expert-mode/plans/<feature-kebab-case>.md` from the repository r
 - **Goal supplied:** look for a plan covering the same feature; continue it rather than create a duplicate.
 - **No goal supplied:** inspect the plan directory for active plans. If one, offer to continue it; if several, ask which; if none, ask what to plan.
 - **Continuation:** read the existing artifact and re-check repository facts that may have changed.
-- **Plan not in this template** (missing `Design:` or other sections, or outside the plan directory): continue it, but ask before adding fields or sections or moving the file.
+- **Plan not in this template** (missing `Design:` or other sections, or outside the plan directory): continue editing within existing sections, but ask before adding fields or sections, moving, or renaming the file.
 - If the environment cannot write a file, provide the complete Markdown artifact and state that persistence was not possible; never claim it was saved.
 
 ## Planning mode (default)
