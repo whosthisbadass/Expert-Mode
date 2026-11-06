@@ -72,9 +72,9 @@ Before presenting, silently check whether existing behavior already meets the ne
 
 After the first behavioral draft, identify meaningful workstreams and map only the useful specialist skills to each. Record assignments in the **same plan artifact** under `## Specialist assignments` with columns `Workstream | Skill | Responsibility | Stage`. Stage may be `Planning`, `Implementation`, `Validation`, or `Documentation`; a skill may cover multiple stages. Omit the section if no specialist adds value.
 
-Available Expert-Mode specialists include `/devops-architect`, `/appsec-engineer`, `/cybersecurity-engineer`, `/sre-observability`, `/ui-foundation`, `/ui-polish`, `/ui-audit`, `/technical-writer`, and `/documentation-writer`. Select by task, not by checklist. Security and reliability expertise should inform early design where relevant, not only post-implementation review.
+Available Expert-Mode specialists include `devops-architect`, `appsec-engineer`, `cybersecurity-engineer`, `sre-observability`, `ui-foundation`, `ui-polish`, `ui-audit`, `technical-writer`, and `documentation-writer`. Select by task, not by checklist. Security and reliability expertise should inform early design where relevant, not only post-implementation review.
 
-During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `/pseudo-plan` responsible for scope and integration. Avoid a specialist review loop for trivial changes.
+During planning, assignments are **advisory**: they identify ownership and considerations, not permission to change code. If specialist guidance is accessible and useful, apply it to the behavioral plan while keeping `pseudo-plan` responsible for scope and integration. Avoid a specialist review loop for trivial changes.
 
 ### 5. Refine conversationally
 
@@ -98,7 +98,7 @@ State the plan's current status, material open decisions, and artifact path. Inv
 
 1. Re-read the artifact, confirm the user explicitly authorized implementation, and set `Status: Execution authorized`. Resolve any open decision that materially affects behavior before editing code.
 2. Add `## Technical approach`: map behavioral steps to real files, interfaces, data structures, migrations, and tests. Prefer existing patterns and the smallest sufficient change. The technical approach implements the pseudocode; it does not replace it.
-3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful. 
+3. Implement the authorized workstreams, using assigned specialist skills when supported and useful. Keep one integrated implementation, not independent competing designs. Track meaningful work in `## Implementation progress` (workstream, status, verification) when more than one workstream or session makes tracking useful.
 4. Validate the implemented behavior against the approved acceptance conditions and run relevant available checks. Use applicable specialist reviews (such as security, reliability, or UI audit) proportionally; report checks that could not be run. Treat validation as ongoing during implementation with a final verification gate.
 5. Update relevant technical and user/operator documentation using the appropriate expertise where useful. Document actual implemented behavior, not aspirational plans; for trivial changes, no separate documentation is required.
 6. If discovery requires changing approved behavior, stop, update the plan, mark the design draft as appropriate, and ask for a decision. Ordinary technical choices preserving approved behavior need no new approval.
@@ -136,7 +136,7 @@ Design: Draft
 ## Specialist assignments
 | Workstream | Skill | Responsibility | Stage |
 | --- | --- | --- | --- |
-| <Relevant workstream> | </relevant-skill> | <Bounded responsibility> | <Planning/Implementation/Validation/Documentation> |
+| <Relevant workstream> | <relevant-skill> | <Bounded responsibility> | <Planning/Implementation/Validation/Documentation> |
 
 ## Open decisions
 <Only unresolved choices that materially change behavior>
@@ -148,7 +148,7 @@ Design: Draft
 Valid status values: `Planning`, `Execution authorized`, `Implemented`.
 Valid design values: `Draft`, `Approved`.
 
-During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work. 
+During execution, optionally add `## Implementation progress` with `Workstream | Status | Verification` when useful for resuming or coordinating work.
 
 A blank `Open decisions` section does not imply approval. Do not introduce version counters or parallel artifacts unless requested.
 
