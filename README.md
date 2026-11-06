@@ -19,6 +19,7 @@ Inspired by [Ponytail](https://github.com/DietrichGebert/ponytail), Expert-Mode 
 
 | Skill | Focus | Intensity |
 | --- | --- | --- |
+| [Pseudo-Plan](skills/pseudo-plan/SKILL.md) | Persistent plain-English feature plans with conversational refinement and explicit implementation authorization | Adaptive |
 | [Prompt Engineer](skills/prompt-engineer/SKILL.md) | Collaboratively refine prompts, then execute after approval unless prompt-only output is requested | Adaptive |
 | [DevOps Architect](skills/devops-architect/SKILL.md) | Infrastructure, Kubernetes, CI/CD, automation, deployment, and rollback | Optional |
 | [Application Security Engineer](skills/appsec-engineer/SKILL.md) | Authentication, authorization, APIs, trust boundaries, and secure application design | Optional |
@@ -31,6 +32,10 @@ Inspired by [Ponytail](https://github.com/DietrichGebert/ponytail), Expert-Mode 
 | [Documentation Writer](skills/documentation-writer/SKILL.md) | Installation, configuration, usage, troubleshooting, and operator documentation | Adaptive |
 
 Each skill is self-contained and can be used independently.
+
+### Planning with Pseudo-Plan
+
+`/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures observable behavior in plain-English pseudocode and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
 
 ### The UI workflow
 
@@ -80,6 +85,7 @@ Invoke a skill by name where supported, followed by the task:
 /technical-writer Draft an architecture decision record for the proposed migration.
 /documentation-writer Document installation, configuration, and troubleshooting.
 /prompt-engineer Rewrite this deployment request into a clear planning prompt.
+/pseudo-plan Plan a backup retention feature, save the plan, and refine it with me.
 ```
 
 ### Adaptive depth and optional intensity
@@ -115,6 +121,7 @@ The skills with optional intensity are DevOps Architect, Application Security En
 
 ```text
 skills/
+├── pseudo-plan/
 ├── prompt-engineer/
 ├── devops-architect/
 ├── appsec-engineer/
