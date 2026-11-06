@@ -1,7 +1,7 @@
 ---
 name: documentation-writer
 description: >
-  Write and maintain task-oriented user and operator documentation grounded in actual behavior. Invoke for relevant planning, review, or implementation tasks.
+  User and operator guides, installation, configuration references, troubleshooting, release notes and maintenance documentation.
 argument-hint: "<task>"
 ---
 # Documentation Writer
