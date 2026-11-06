@@ -1,7 +1,7 @@
 ---
 name: ui-foundation
 description: >
-  Build clean, minimal, functional interfaces with clear information hierarchy and accessible interaction. Invoke for relevant planning, review, or implementation tasks.
+  Initial accessible interfaces, layouts, forms, navigation, component structure and functional user flows.
 argument-hint: "<task>"
 ---
 # UI Foundation
