@@ -41,6 +41,10 @@ Start with `/prompt-engineer` to improve the request through conversation. Appro
 
 All skills also work independently: invoking `/pseudo-plan` skips prompt engineering, and invoking a specialist directly does not require the full workflow. Cross-skill handoffs depend on the agent's supported skill mechanisms; listing an assignment does not mean another skill or subagent was actually invoked.
 
+### Specialist ownership
+
+`appsec-engineer` owns authentication, session management, application authorization, and application-level secret handling. `cybersecurity-engineer` owns identity providers, SSO infrastructure, enterprise IAM, platform secret stores, and network/host security. Cross-boundary work can assign both with distinct responsibilities.
+
 ### Planning with Pseudo-Plan
 
 `/pseudo-plan` creates a persistent Markdown plan for **every feature, including small ones**, by default in `.expert-mode/plans/<feature-kebab-case>.md`. The plan captures observable behavior in plain-English pseudocode, assigns relevant specialist responsibilities when useful, and evolves through normal conversation. Approving the design **does not authorize implementation**: only an explicit request such as “implement this” allows code changes. The skill uses adaptive depth without intensity modes.
@@ -54,6 +58,21 @@ The three UI skills cover complementary stages, but none requires the others:
 3. **`/ui-audit`** — Inspect implemented code and behavior; report prioritized findings.
 
 ## Installation
+
+### Claude Code plugin (recommended)
+
+In Claude Code, add the GitHub marketplace and install the plugin:
+
+```text
+/plugin marketplace add whosthisbadass/Expert-Mode
+/plugin install expert-mode@expert-mode
+```
+
+Plugin-installed skills use namespaced commands such as `/expert-mode:prompt-engineer`, `/expert-mode:pseudo-plan`, and `/expert-mode:appsec-engineer`. Manual skill-directory installations retain `/prompt-engineer`, `/pseudo-plan`, and `/appsec-engineer`. The skills support either form; avoid installing duplicate copies of the same skill in one environment.
+
+For a local checkout, validate the manifest and marketplace with `claude plugin validate .` before relying on installation. Plugin installation and discovery still need live verification in Claude Code.
+
+### Manual installation (Claude Code, Codex, other agents)
 
 Clone the repository:
 
@@ -82,7 +101,7 @@ Check your agent's documentation for skill discovery and invocation behavior. No
 
 ## Usage
 
-Invoke a skill by name where supported, followed by the task:
+Invoke a skill by name where supported, followed by the task. The examples below use standalone names; prepend `expert-mode:` after the slash for a Claude Code plugin installation:
 
 ```text
 /devops-architect Review my Kubernetes deployment and identify operational risks.
@@ -121,6 +140,8 @@ Intensity changes **depth, not permission**. It does not authorize unrelated edi
 
 The skills with optional intensity are DevOps Architect, Application Security Engineer, Cybersecurity Engineer, Site Reliability & Observability, UI Polish, and UI Audit. The remaining skills use adaptive depth only.
 
+**Approval warning:** `/prompt-engineer` executes an approved standalone implementation request immediately by default. For the integrated feature workflow, approving its rewritten prompt starts `/pseudo-plan` planning only; coding still requires a later explicit implementation instruction.
+
 ### Prompt Engineer is different
 
 `/prompt-engineer` proposes a clearer prompt and iterates through normal conversation until the user explicitly approves the complete proposal. **Approval executes the approved prompt by default**, respecting its scope. For new-feature planning, it hands off to `/pseudo-plan` when available; prompt approval starts planning, not implementation. To receive only the final prompt, specify **“prompt only”** or **“do not execute”**. No separate execution command is needed after approval.
@@ -128,6 +149,9 @@ The skills with optional intensity are DevOps Architect, Application Security En
 ## Repository layout
 
 ```text
+.claude-plugin/
+├── plugin.json
+└── marketplace.json
 skills/
 ├── pseudo-plan/
 ├── prompt-engineer/
