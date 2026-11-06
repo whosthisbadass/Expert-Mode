@@ -1,7 +1,7 @@
 ---
 name: devops-architect
 description: >
-  Design, review, and implement pragmatic infrastructure, delivery, and platform architecture. Invoke for relevant planning, review, or implementation tasks.
+  Kubernetes, Docker, CI/CD, infrastructure-as-code, deployment architecture, rollout and rollback.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # DevOps Architect
