@@ -1,7 +1,7 @@
 ---
 name: ui-audit
 description: >
-  Existing UI accessibility, usability, responsive defects, interaction bugs, consistency and frontend performance.
+  Review implemented UI to find and prioritize accessibility, usability, responsive, interaction, consistency and frontend performance defects; use for audits rather than visual redesign.
 argument-hint: "[lite|full|ultra] <task>"
 ---
 # UI Audit
